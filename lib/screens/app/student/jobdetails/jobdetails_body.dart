@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 
 class JobdetailsBody extends StatelessWidget {
   // ignore: prefer_typing_uninitialized_variables
@@ -7,32 +8,34 @@ class JobdetailsBody extends StatelessWidget {
   const JobdetailsBody({this.state});
 
   void _confirmApplyJobDialog(BuildContext context) {
-    showDialog(
+    showCupertinoDialog(
         context: context,
         builder: (BuildContext ctx) {
-          return AlertDialog(
-            title: Text('Apply Job'),
-            content: Text('Are you sure to apply this job?'),
+          return CupertinoAlertDialog(
+            title: const Text('Apply Job'),
+            content: const Text(
+                'Confirm to submit your application? Your apllication will notify the recruiter and wait for approval.'),
             actions: [
-              // The "Yes" button
-              TextButton(
+              CupertinoDialogAction(
                   onPressed: () {
-                    // Remove the box
-                    // setState(() {
-                    //   state.isApplyJobDialog = false;
-                    // });
-
-                    // Close the dialog
+                    // Confirm, Close the dialog and pop job details
                     Navigator.of(context).pop();
                     Navigator.of(context).pop();
                   },
-                  child: const Text('Confirm')),
-              TextButton(
-                  onPressed: () {
-                    // Close the dialog
-                    Navigator.of(context).pop();
-                  },
-                  child: const Text('Cancel'))
+                  child: const Text(
+                    'Confirm',
+                    style: TextStyle(color: Colors.red),
+                  )),
+              CupertinoDialogAction(
+                onPressed: () {
+                  // Cancel, Close the dialog
+                  Navigator.of(context).pop();
+                },
+                child: const Text(
+                  'Cancel',
+                  style: TextStyle(color: Colors.blue),
+                ),
+              ),
             ],
           );
         });

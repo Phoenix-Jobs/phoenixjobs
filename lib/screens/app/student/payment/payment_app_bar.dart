@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-class JobdetailsAppBar extends StatelessWidget implements PreferredSizeWidget {
+class PaymentAppBar extends StatelessWidget implements PreferredSizeWidget {
   // ignore: prefer_typing_uninitialized_variables
   final state;
   // ignore: use_key_in_widget_constructors
-  const JobdetailsAppBar({this.state});
+  const PaymentAppBar({this.state});
 
   @override
   Size get preferredSize => const Size.fromHeight(50.0);
@@ -16,7 +16,7 @@ class JobdetailsAppBar extends StatelessWidget implements PreferredSizeWidget {
         icon: const Icon(Icons.arrow_back, color: Colors.white),
         onPressed: () => Navigator.of(context).pop(),
       ),
-      title: const Text('Restaurant Mak XXX'),
+      title: const Text('Payment'),
       centerTitle: false,
     );
   }

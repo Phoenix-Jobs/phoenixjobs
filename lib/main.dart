@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:phoenixjobs/screens/app/student/jobdetails/jobdetails_screen.dart';
+// import 'package:phoenixjobs/screens/app/student/applicationdetails/applicationdetails_screen.dart';
+import 'package:phoenixjobs/screens/app/student/payment/payment_screen.dart';
+// import 'package:phoenixjobs/screens/app/student/jobapplication/jobapplication_screen.dart';
+// import 'package:phoenixjobs/screens/app/student/jobdetails/jobdetails_screen.dart';
 // import 'package:phoenixjobs/screens/app/auth/auth_screen.dart';
 // import 'package:phoenixjobs/screens/app/register/register_screen.dart';
 // import 'package:phoenixjobs/screens/app/student/joblist/joblist_screen.dart';
@@ -13,6 +16,6 @@ void main() {
     title: "Phoenix Jobs",
     theme: ThemeData(primarySwatch: Colors.deepOrange),
     // loading different home to test different interface
-    home: JobdetailsScreen(),
+    home: PaymentScreen(),
   ));
 }
