@@ -1,10 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:phoenixjobs/screens/app/student/jobdetails/jobdetails_screen.dart';
 
 class JoblistBody extends StatelessWidget {
   // ignore: prefer_typing_uninitialized_variables
   final state;
   // ignore: use_key_in_widget_constructors
   const JoblistBody({this.state});
+
+  void _navigateJobdetailsScreen({context}) async {
+    await Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (_) => JobdetailsScreen(),
+        ));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +22,7 @@ class JoblistBody extends StatelessWidget {
       children: <Widget>[
         // first item
         InkWell(
-          onTap: () {},
+          onTap: () => _navigateJobdetailsScreen(context: context),
           child: Column(
             children: <Widget>[
               // title image

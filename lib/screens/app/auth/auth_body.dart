@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:phoenixjobs/screens/app/register/register_screen.dart';
+import 'package:phoenixjobs/screens/app/staff/staff_dashboard/staff_dashboard_screen.dart';
+import 'package:phoenixjobs/screens/app/student/dashboard/dashboard_screen.dart';
 
 class AuthBody extends StatelessWidget {
   // ignore: prefer_typing_uninitialized_variables
@@ -12,6 +14,28 @@ class AuthBody extends StatelessWidget {
         context,
         MaterialPageRoute(
           builder: (_) => RegisterScreen(),
+        ));
+    if (result != null) {
+      // state.setState(() => something = result);
+    }
+  }
+
+  void _navigateDashboardScreen({context}) async {
+    final result = await Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (_) => DashboardScreen(),
+        ));
+    if (result != null) {
+      // state.setState(() => something = result);
+    }
+  }
+
+  void _navigateStaffDashboardScreen({context}) async {
+    final result = await Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (_) => StaffDashboardScreen(),
         ));
     if (result != null) {
       // state.setState(() => something = result);
@@ -72,7 +96,7 @@ class AuthBody extends StatelessWidget {
             },
           ),
           const SizedBox(height: 20),
-          // login button
+          // dummy login button
           MaterialButton(
             minWidth: MediaQuery.of(context).size.width * 0.8,
             height: 60,
@@ -83,8 +107,30 @@ class AuthBody extends StatelessWidget {
               if (state.loginFormKey.currentState.validate()) {
                 // If the form is valid, display a Snackbar.
                 // ignore: deprecated_member_use
-                Scaffold.of(context).showSnackBar(
-                    const SnackBar(content: Text('Login complete.')));
+                // Scaffold.of(context).showSnackBar(
+                //     const SnackBar(content: Text('Login complete.')));
+                _navigateStaffDashboardScreen(context: context);
+              }
+            },
+            child: const Text(
+              "(login as Staff)",
+              style: TextStyle(color: Colors.white),
+            ),
+          ),
+          const SizedBox(height: 20), // login button
+          MaterialButton(
+            minWidth: MediaQuery.of(context).size.width * 0.8,
+            height: 60,
+            color: Colors.deepOrange,
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(30.0)),
+            onPressed: () {
+              if (state.loginFormKey.currentState.validate()) {
+                // If the form is valid, display a Snackbar.
+                // ignore: deprecated_member_use
+                // Scaffold.of(context).showSnackBar(
+                //     const SnackBar(content: Text('Login complete.')));
+                _navigateDashboardScreen(context: context);
               }
             },
             child: const Text(
