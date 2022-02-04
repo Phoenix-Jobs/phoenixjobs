@@ -26,7 +26,7 @@ class WelcomeBody extends StatelessWidget {
         Container(
           decoration: const BoxDecoration(
             image: DecorationImage(
-              image: AssetImage("images/screens/welcome/bgImage.png"),
+              image: AssetImage("assets/images/screens/welcome/bgImage.png"),
               fit: BoxFit.cover,
             ),
           ),
@@ -38,7 +38,7 @@ class WelcomeBody extends StatelessWidget {
             children: <Widget>[
               // logo content
               Image.asset(
-                "images/screens/welcome/logo_content.png",
+                "assets/images/screens/welcome/logo_content.png",
                 // height: MediaQuery.of(context).size.width * 0.6,
                 width: MediaQuery.of(context).size.width * 0.6,
                 fit: BoxFit.cover,
