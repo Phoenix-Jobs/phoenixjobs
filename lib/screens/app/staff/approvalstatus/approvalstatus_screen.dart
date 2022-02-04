@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:phoenixjobs/screens/app/staff/approvalstatus/approvalstatus_app_bar.dart';
+import 'package:phoenixjobs/screens/app/staff/approvalstatus/approvalstatus_body.dart';
 
 // ignore: use_key_in_widget_constructors
 class ApprovalstatusScreen extends StatefulWidget {
@@ -11,9 +13,9 @@ class _ApprovalstatusScreenState extends State<ApprovalstatusScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-          //appBar: ApprovalAppBar(state: this),
-          //body: ApprovalBody(state: this),
-          ),
+        appBar: ApprovalstatusAppBar(state: this),
+        body: ApprovalstatusBody(state: this),
+      ),
     );
   }
 }

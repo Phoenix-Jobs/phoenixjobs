@@ -1,8 +1,8 @@
+// ignore_for_file: import_of_legacy_library_into_null_safe
+
 import 'package:flutter/material.dart';
 import 'package:phoenixjobs/screens/app/auth/login_viewmodel.dart';
 import 'package:phoenixjobs/screens/app/register/register_screen.dart';
-import 'package:phoenixjobs/screens/app/staff/staff_dashboard/staff_dashboard_screen.dart';
-import 'package:phoenixjobs/screens/app/student/dashboard/dashboard_screen.dart';
 import '../../view.dart';
 
 class AuthBody extends StatelessWidget {

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:phoenixjobs/screens/app/student/jobapplication/jobapplication_screen.dart';
 import 'package:phoenixjobs/screens/app/student/joblist/joblist_screen.dart';
-import 'package:phoenixjobs/screens/app/student/payment/payment_screen.dart';
 
 class StaffDashboardBody extends StatelessWidget {
   // ignore: prefer_typing_uninitialized_variables

@@ -342,7 +342,7 @@ class ApprovalBody extends StatelessWidget {
                             TextSpan(
                               text: 'Declined',
                               style: TextStyle(
-                                color: Colors.red[700],
+                                color: Colors.redAccent[700],
                                 fontSize: 12,
                               ),
                             ),
