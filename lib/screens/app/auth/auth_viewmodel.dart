@@ -1,16 +1,15 @@
-// Turn of null-safety by writing the following line
 // @dart=2.9
 import 'package:flutter/foundation.dart';
 
+import 'package:phoenixjobs/services/service_locator.dart';
 import '../../../models/user.dart';
-import '../../../service_locator/service_locator.dart';
 import '../../viewmodel.dart';
 import '../../../services/user/user_repository.dart';
 
-class LoginViewmodel extends Viewmodel {
+class AuthViewmodel extends Viewmodel {
   final UserRepository _userRepository = locator();
 
-  LoginViewmodel() {
+  AuthViewmodel() {
     _userRepository.addListener(() {
       notifyListeners();
     });
@@ -21,9 +20,11 @@ class LoginViewmodel extends Viewmodel {
   String get errorMessage => _errorMessage;
   set errorMessage(value) => update(() => _errorMessage = value);
 
-  Future<void> signIn(
-      {@required String username, @required String password}) async {
-    await _userRepository.signIn(email: username, password: password);
+  Future<void> signIn({
+    @required String email,
+    @required String password,
+  }) async {
+    await _userRepository.signIn(email: email, password: password);
     if (_userRepository.user != null) {
       _errorMessage = null;
     } else {

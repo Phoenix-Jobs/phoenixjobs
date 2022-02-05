@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 class AuthAppBar extends StatelessWidget implements PreferredSizeWidget {
+  // ignore: prefer_typing_uninitialized_variables
   final state;
   // ignore: use_key_in_widget_constructors
   const AuthAppBar({this.state});

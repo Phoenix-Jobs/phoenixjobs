@@ -1,13 +1,12 @@
+// ignore_for_file: import_of_legacy_library_into_null_safe
 // @dart=2.9
 
 import 'dart:async';
-
 import 'package:flutter/foundation.dart';
-
-import '../authentication/authentication_service.dart';
-import '../../models/user.dart';
-import '../../service_locator/service_locator.dart';
-import '../repository.dart';
+import 'package:phoenixjobs/models/user.dart';
+import 'package:phoenixjobs/services/auth/auth_service.dart';
+import 'package:phoenixjobs/services/repository.dart';
+import 'package:phoenixjobs/services/service_locator.dart';
 
 class UserRepository extends Repository {
   User _user;

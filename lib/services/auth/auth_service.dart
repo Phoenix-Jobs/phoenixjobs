@@ -2,15 +2,15 @@
 
 import 'dart:async';
 import 'package:flutter/foundation.dart';
-
-import '../../models/user.dart';
+import 'package:phoenixjobs/models/user.dart';
 
 abstract class AuthenticationService {
-  Future<void> signIn(
-      {@required String email,
-      @required String password,
-      Function(User) onSuccess,
-      Function(Exception) onError});
+  Future<void> signIn({
+    @required String email,
+    @required String password,
+    Function(User) onSuccess,
+    Function(Exception) onError,
+  });
 
   Future<void> signOut({Function onSuccess, Function(Exception) onError});
 

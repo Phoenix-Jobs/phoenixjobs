@@ -1,7 +1,7 @@
 // ignore_for_file: import_of_legacy_library_into_null_safe
 
 import 'package:flutter/material.dart';
-import 'package:phoenixjobs/screens/app/auth/login_viewmodel.dart';
+import 'package:phoenixjobs/screens/app/auth/auth_viewmodel.dart';
 import 'package:phoenixjobs/screens/app/register/register_screen.dart';
 import '../../view.dart';
 
@@ -24,7 +24,7 @@ class AuthBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return View<LoginViewmodel>(
+    return View<AuthViewmodel>(
       builder: (context, viewmodel, _) => ListView(
         children: [
           ListView(
@@ -32,19 +32,19 @@ class AuthBody extends StatelessWidget {
             shrinkWrap: true,
             padding: const EdgeInsets.all(20),
             children: <Widget>[
-              SizedBox(height: MediaQuery.of(context).size.height * 0.3),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.20),
               // username
               TextFormField(
-                controller: state.usernameController,
+                controller: state.emailController,
                 obscureText: false,
                 decoration: const InputDecoration(
                   icon: Icon(Icons.person),
                   border: OutlineInputBorder(),
-                  labelText: 'Username',
+                  labelText: 'Email',
                 ),
                 validator: (value) {
                   if (value!.isEmpty) {
-                    return 'Please enter your username';
+                    return 'Please enter your email';
                   }
                   return null;
                 },
@@ -79,6 +79,17 @@ class AuthBody extends StatelessWidget {
                 },
               ),
               const SizedBox(height: 20),
+              // error message
+              if (viewmodel.errorMessage != null)
+                Column(
+                  children: <Widget>[
+                    Text(
+                      viewmodel.errorMessage,
+                      style: const TextStyle(color: Colors.red, fontSize: 14.0),
+                    ),
+                    const SizedBox(height: 20),
+                  ],
+                ),
               // login button
               MaterialButton(
                 minWidth: MediaQuery.of(context).size.width * 0.8,
