@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:phoenixjobs/models/job.dart';
-import 'package:phoenixjobs/screens/app/student/dashboard/dashboard_viewmodel.dart';
+import 'package:phoenixjobs/screens/app/student/student_viewmodel.dart';
 import 'package:phoenixjobs/screens/app/student/jobdetails/jobdetails_screen.dart';
 import 'package:phoenixjobs/screens/view.dart';
 
@@ -22,7 +22,7 @@ class JoblistBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return View<DashboardViewmodel>(
+    return View<StudentViewModel>(
       builder: (_, vm, __) {
         return ListView(
           padding: const EdgeInsets.all(20),
@@ -38,9 +38,9 @@ class JoblistBody extends StatelessWidget {
                 child: ListView.builder(
                   shrinkWrap: true,
                   physics: const ClampingScrollPhysics(),
-                  itemCount: vm.jobLength > 5 ? 5 : vm.jobLength,
+                  itemCount: vm.jobLength,
                   itemBuilder: (context, index) =>
-                      SelectorView<DashboardViewmodel, Job>(
+                      SelectorView<StudentViewModel, Job>(
                     selector: (_, vm) => vm.getJob(index),
                     builder: (_, vm, job, ___) {
                       return Column(

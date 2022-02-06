@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:phoenixjobs/models/job.dart';
-import 'package:phoenixjobs/screens/app/student/dashboard/dashboard_viewmodel.dart';
+import 'package:phoenixjobs/screens/app/student/student_viewmodel.dart';
 import 'package:phoenixjobs/screens/view.dart';
 
 class JobTile extends StatelessWidget {
@@ -12,7 +12,7 @@ class JobTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SelectorView<DashboardViewmodel, Job>(
+    return SelectorView<StudentViewModel, Job>(
       selector: (_, vm) => vm.getJob(index),
       builder: (_, vm, job, ___) {
         return Column(

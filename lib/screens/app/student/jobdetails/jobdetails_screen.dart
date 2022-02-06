@@ -14,9 +14,9 @@ class JobdetailsScreen extends StatefulWidget {
 }
 
 class _JobdetailsScreenState extends State<JobdetailsScreen> {
-  bool _isApplyJobDialog = false;
-  bool get isApplyJobDialog => _isApplyJobDialog;
-  set isApplyJobDialog(v) => _isApplyJobDialog = v;
+  // bool _isApplyJobDialog = false;
+  // bool get isApplyJobDialog => _isApplyJobDialog;
+  // set isApplyJobDialog(v) => _isApplyJobDialog = v;
 
   @override
   Widget build(BuildContext context) {

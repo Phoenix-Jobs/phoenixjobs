@@ -13,7 +13,7 @@ import 'package:phoenixjobs/services/service_locator.dart';
 import 'package:phoenixjobs/services/user/user_repository.dart';
 import 'package:phoenixjobs/services/user/user_service.dart';
 
-class DashboardViewmodel extends Viewmodel {
+class StudentViewModel extends Viewmodel {
   // stream observer initializer
   StreamSubscription _jobStreamObserver;
   StreamSubscription _jobApplicationStreamObserver;
@@ -40,7 +40,7 @@ class DashboardViewmodel extends Viewmodel {
   List<JobApplication> _paymentList;
 
   // viewmodel onload
-  DashboardViewmodel() {
+  StudentViewModel() {
     _userRepository.addListener(() async {
       if (user == null) {
         // if no user, consider dashboard items is nothing
@@ -118,6 +118,18 @@ class DashboardViewmodel extends Viewmodel {
         final newJobApplication =
             await _jobApplicationService.addJobApplication(jobApplication);
         _jobApplicationList.add(newJobApplication);
+      });
+
+  Future<void> updateJobApplication({dynamic id, JobApplication data}) async =>
+      await update(() async {
+        // update new data to firebase and assign to variable
+        final updatedJobApplication = await _jobApplicationService
+            .updateJobApplication(id: id, data: data);
+        // get item index from vm list
+        final index = _jobApplicationList
+            .indexWhere((jobApplication) => jobApplication.id == id);
+        // assign updated item into vm list
+        _jobApplicationList[index] = updatedJobApplication;
       });
 
   // signout

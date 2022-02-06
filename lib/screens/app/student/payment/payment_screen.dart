@@ -9,10 +9,6 @@ class PaymentScreen extends StatefulWidget {
 }
 
 class _PaymentScreenState extends State<PaymentScreen> {
-  bool _isApplyJobDialog = false;
-  bool get isApplyJobDialog => _isApplyJobDialog;
-  set isApplyJobDialog(v) => _isApplyJobDialog = v;
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(

@@ -6,7 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:phoenixjobs/models/job.dart';
 import 'package:phoenixjobs/models/job_application.dart';
 import 'package:phoenixjobs/models/user.dart';
-import 'package:phoenixjobs/screens/app/student/dashboard/dashboard_viewmodel.dart';
+import 'package:phoenixjobs/screens/app/student/student_viewmodel.dart';
 import 'package:phoenixjobs/screens/view.dart';
 
 class JobdetailsBody extends StatelessWidget {
@@ -17,7 +17,7 @@ class JobdetailsBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SelectorView<DashboardViewmodel, Job>(
+    return SelectorView<StudentViewModel, Job>(
       selector: (_, vm) => vm.getJob(index),
       builder: (_, vm, job, ___) {
         return ListView(
@@ -140,7 +140,7 @@ class JobdetailsBody extends StatelessWidget {
                     text: TextSpan(
                       children: <TextSpan>[
                         TextSpan(
-                          text: '${job.jobHighlights}',
+                          text: job.jobHighlights,
                           style: TextStyle(
                             color: Colors.grey[800],
                             fontSize: 12,
@@ -351,7 +351,7 @@ class JobdetailsBody extends StatelessWidget {
                   /* end of additional infomations */
                   const SizedBox(height: 30),
                   // apply job button
-                  View<DashboardViewmodel>(
+                  View<StudentViewModel>(
                     shouldRebuild: false,
                     builder: (_, vmJobApplication, __) {
                       return MaterialButton(
@@ -382,14 +382,12 @@ class JobdetailsBody extends StatelessWidget {
                                         // add into job application
                                         JobApplication jobApplication =
                                             JobApplication(
-                                          applicationStatus:
-                                              'Waiting for Approval',
                                           approvalStatus: '',
                                           dateApply: strDateToday,
                                           isApproval: false,
                                           isPayment: false,
+                                          isViewResult: false,
                                           paymentStatus: '',
-                                          recruiter: vm.getJob(index).recruiter,
                                           selectedJob: Job(
                                             id: job.id,
                                             imagePath: job.imagePath,

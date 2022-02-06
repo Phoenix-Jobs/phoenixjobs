@@ -1,7 +1,7 @@
 // ignore_for_file: import_of_legacy_library_into_null_safe
 
 import 'package:flutter/material.dart';
-import 'package:phoenixjobs/screens/app/student/dashboard/dashboard_viewmodel.dart';
+import 'package:phoenixjobs/screens/app/student/student_viewmodel.dart';
 import 'package:phoenixjobs/screens/app/student/jobapplication/jobapplication_screen.dart';
 import 'package:phoenixjobs/screens/app/student/joblist/joblist_screen.dart';
 import 'package:phoenixjobs/screens/app/student/payment/payment_screen.dart';
@@ -30,7 +30,7 @@ class DashboardDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return View<DashboardViewmodel>(
+    return View<StudentViewModel>(
       builder: (_, vm, __) {
         return Drawer(
           child: ListView(

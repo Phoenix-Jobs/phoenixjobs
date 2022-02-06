@@ -1,7 +1,7 @@
 // ignore_for_file: import_of_legacy_library_into_null_safe
 
 import 'package:flutter/material.dart';
-import 'package:phoenixjobs/screens/app/student/dashboard/dashboard_viewmodel.dart';
+import 'package:phoenixjobs/screens/app/student/student_viewmodel.dart';
 import 'package:phoenixjobs/screens/app/student/dashboard/job_application_tile.dart';
 import 'package:phoenixjobs/screens/app/student/dashboard/job_tile.dart';
 import 'package:phoenixjobs/screens/app/student/dashboard/payment_tile.dart';
@@ -33,7 +33,7 @@ class DashboardBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return View<DashboardViewmodel>(
+    return View<StudentViewModel>(
       builder: (_, vm, __) {
         // ignore: avoid_print
         print("My print, vm.jobLength: ${vm.jobLength}");

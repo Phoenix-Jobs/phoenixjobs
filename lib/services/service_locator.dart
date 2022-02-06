@@ -5,7 +5,7 @@ import 'package:get_it/get_it.dart';
 import 'package:phoenixjobs/screens/app/auth/auth_viewmodel.dart';
 import 'package:phoenixjobs/screens/app/auth/judge_user_type_viewmodel.dart';
 import 'package:phoenixjobs/screens/app/staff/staff_dashboard/staff_dashboard_viewmodel.dart';
-import 'package:phoenixjobs/screens/app/student/dashboard/dashboard_viewmodel.dart';
+import 'package:phoenixjobs/screens/app/student/student_viewmodel.dart';
 import 'package:phoenixjobs/services/auth/auth_service_firebase.dart';
 import 'package:phoenixjobs/services/auth/auth_service.dart';
 import 'package:phoenixjobs/services/job/job_service.dart';
@@ -48,8 +48,8 @@ void initializeServiceLocator() {
   locator.registerLazySingleton<AuthViewmodel>(
     () => AuthViewmodel(),
   );
-  locator.registerLazySingleton<DashboardViewmodel>(
-    () => DashboardViewmodel(),
+  locator.registerLazySingleton<StudentViewModel>(
+    () => StudentViewModel(),
   );
   locator.registerLazySingleton<StaffDashboardViewmodel>(
     () => StaffDashboardViewmodel(),

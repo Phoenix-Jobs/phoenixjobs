@@ -1,6 +1,8 @@
+// ignore_for_file: import_of_legacy_library_into_null_safe
+
 import 'package:flutter/material.dart';
 import 'package:phoenixjobs/models/job.dart';
-import 'package:phoenixjobs/screens/app/student/dashboard/dashboard_viewmodel.dart';
+import 'package:phoenixjobs/screens/app/student/student_viewmodel.dart';
 import 'package:phoenixjobs/screens/view.dart';
 
 class JobdetailsAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -14,7 +16,7 @@ class JobdetailsAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SelectorView<DashboardViewmodel, Job>(
+    return SelectorView<StudentViewModel, Job>(
       selector: (_, vm) => vm.getJob(index),
       builder: (_, vm, job, ___) {
         return AppBar(

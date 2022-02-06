@@ -4,6 +4,11 @@ import 'package:phoenixjobs/screens/app/student/applicationdetails/applicationde
 
 // ignore: use_key_in_widget_constructors
 class ApplicationdetailsScreen extends StatefulWidget {
+  final int _index;
+  int get index => _index;
+  // ignore: use_key_in_widget_constructors
+  const ApplicationdetailsScreen({index}) : _index = index;
+
   @override
   State<ApplicationdetailsScreen> createState() =>
       _ApplicationdetailsScreenScreenState();
@@ -11,16 +16,12 @@ class ApplicationdetailsScreen extends StatefulWidget {
 
 class _ApplicationdetailsScreenScreenState
     extends State<ApplicationdetailsScreen> {
-  bool _isApplyJobDialog = false;
-  bool get isApplyJobDialog => _isApplyJobDialog;
-  set isApplyJobDialog(v) => _isApplyJobDialog = v;
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: ApplicationdetailsAppBar(state: this),
-        body: ApplicationdetailsBody(state: this),
+        appBar: ApplicationdetailsAppBar(state: this, index: widget.index),
+        body: ApplicationdetailsBody(state: this, index: widget.index),
       ),
     );
   }
