@@ -1,9 +1,8 @@
 // ignore_for_file: import_of_legacy_library_into_null_safe
 
 import 'package:flutter/material.dart';
-import 'package:phoenixjobs/screens/app/staff/approval/approval_screen.dart';
 import 'package:phoenixjobs/screens/app/staff/recruitment/recruitment_screen.dart';
-import 'package:phoenixjobs/screens/app/staff/staff_viewmodel.dart';
+import 'package:phoenixjobs/screens/app/staff/staff_dashboard/staff_dashboard_viewmodel.dart';
 import 'package:phoenixjobs/screens/view.dart';
 
 class StaffDashboardDrawer extends StatelessWidget {
@@ -20,17 +19,9 @@ class StaffDashboardDrawer extends StatelessWidget {
         ));
   }
 
-  void _navigateApprovalScreen({context}) async {
-    await Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (_) => ApprovalScreen(),
-        ));
-  }
-
   @override
   Widget build(BuildContext context) {
-    return View<StaffViewModel>(
+    return View<StaffDashboardViewmodel>(
       builder: (_, vm, __) {
         return Drawer(
           child: ListView(
@@ -147,10 +138,7 @@ class StaffDashboardDrawer extends StatelessWidget {
                     ),
                     ListTile(
                       title: const Text("Manage approval"),
-                      onTap: () {
-                        Navigator.of(context).pop();
-                        _navigateApprovalScreen(context: context);
-                      },
+                      onTap: () {},
                     ),
                     const Divider(),
                     ListTile(

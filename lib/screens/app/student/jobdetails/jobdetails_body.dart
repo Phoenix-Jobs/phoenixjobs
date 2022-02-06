@@ -6,34 +6,19 @@ import 'package:flutter/cupertino.dart';
 import 'package:phoenixjobs/models/job.dart';
 import 'package:phoenixjobs/models/job_application.dart';
 import 'package:phoenixjobs/models/user.dart';
-import 'package:phoenixjobs/screens/app/staff/addrecruitment/addrecruitment_screen.dart';
-import 'package:phoenixjobs/screens/app/staff/staff_viewmodel.dart';
 import 'package:phoenixjobs/screens/app/student/student_viewmodel.dart';
 import 'package:phoenixjobs/screens/view.dart';
 
 class JobdetailsBody extends StatelessWidget {
   // ignore: prefer_typing_uninitialized_variables
-  final state, index, operation;
+  final state, index;
   // ignore: use_key_in_widget_constructors
-  const JobdetailsBody({this.state, this.index, this.operation});
-
-  void _navigateAddrecruitmentScreen({context, index}) async {
-    await Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (_) =>
-              AddrecruitmentScreen(index: index, operation: 'update'),
-        ));
-  }
+  const JobdetailsBody({this.state, this.index});
 
   @override
   Widget build(BuildContext context) {
     return SelectorView<StudentViewModel, Job>(
-      selector: (_, vm) => vm.currentUser.status == 'student'
-          ? vm.getJob(index)
-          : operation == 'staffJoblist'
-              ? vm.getJob(index)
-              : vm.getRecruitJob(index),
+      selector: (_, vm) => vm.getJob(index),
       builder: (_, vm, job, ___) {
         return ListView(
           children: <Widget>[
@@ -365,157 +350,106 @@ class JobdetailsBody extends StatelessWidget {
                   ),
                   /* end of additional infomations */
                   const SizedBox(height: 30),
-                  // update job button
-                  if (vm.currentUser.uid == job.recruiter.uid)
-                    View<StaffViewModel>(
-                      shouldRebuild: false,
-                      builder: (_, vmRecruitJob, __) {
-                        return MaterialButton(
-                          minWidth: MediaQuery.of(context).size.width,
-                          height: 60,
-                          color: Colors.deepOrange,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(30.0)),
-                          child: const Text(
-                            "UPDATE",
-                            style: TextStyle(color: Colors.white),
-                          ),
-                          onPressed: () {
-                            _navigateAddrecruitmentScreen(
-                                context: context, index: index);
-                          },
-                        );
-                      },
-                    ),
-                  const SizedBox(height: 20),
-                  // delete job button
-                  if (vm.currentUser.uid == job.recruiter.uid)
-                    View<StaffViewModel>(
-                      shouldRebuild: false,
-                      builder: (_, vmRecruitJob, __) {
-                        return MaterialButton(
-                          minWidth: MediaQuery.of(context).size.width,
-                          height: 60,
-                          color: Colors.deepOrange,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(30.0)),
-                          child: const Text(
-                            "DELETE",
-                            style: TextStyle(color: Colors.white),
-                          ),
-                          onPressed: () {
-                            vm.deleteRecruitJob(job.id);
-                            Navigator.of(context).pop();
-                          },
-                        );
-                      },
-                    ),
-                  const SizedBox(height: 30),
                   // apply job button
-                  if (vm.currentUser.status == 'Student')
-                    View<StudentViewModel>(
-                      shouldRebuild: false,
-                      builder: (_, vmJobApplication, __) {
-                        return MaterialButton(
-                          minWidth: MediaQuery.of(context).size.width,
-                          height: 60,
-                          color: vm.isJobApplicationApplied(job.id)
-                              ? Colors.grey[350]
-                              : Colors.deepOrange,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(30.0)),
-                          child: Text(
-                            vm.isJobApplicationApplied(job.id)
-                                ? "JOB APPLIED"
-                                : "APPLY JOB",
-                            style: const TextStyle(color: Colors.white),
-                          ),
-                          onPressed: () {
-                            vm.isJobApplicationApplied(job.id)
-                                ? null
-                                : showCupertinoDialog(
-                                    context: context,
-                                    builder: (BuildContext ctx) {
-                                      return CupertinoAlertDialog(
-                                        title: const Text('Apply Job'),
-                                        content: const Text(
-                                            'Confirm to submit your application? Your apllication will notify the recruiter and wait for approval.'),
-                                        actions: [
-                                          CupertinoDialogAction(
-                                              onPressed: () {
-                                                final dateToday =
-                                                    DateTime.now();
-                                                String strDateToday =
-                                                    DateFormat('d MMM yyyy')
-                                                        .format(dateToday);
-                                                // add into job application
-                                                JobApplication jobApplication =
-                                                    JobApplication(
-                                                  approvalStatus: '',
-                                                  dateApply: strDateToday,
-                                                  isApproval: false,
-                                                  isPayment: false,
-                                                  isViewResult: false,
-                                                  paymentStatus: '',
-                                                  selectedJob: Job(
-                                                    id: job.id,
-                                                    imagePath: job.imagePath,
-                                                    recruiter: vm
-                                                        .getJob(index)
-                                                        .recruiter,
-                                                    title: job.title,
-                                                    venue: job.venue,
-                                                  ),
-                                                  applicant: User(
-                                                    age: vm.currentUser.age,
-                                                    email: vm.currentUser.email,
-                                                    firstName: vm
-                                                        .currentUser.firstName,
-                                                    gender:
-                                                        vm.currentUser.gender,
-                                                    lastName:
-                                                        vm.currentUser.lastName,
-                                                    residueAddress: vm
-                                                        .currentUser
-                                                        .residueAddress,
-                                                    uid: vm.currentUser.uid,
-                                                    username:
-                                                        vm.currentUser.username,
-                                                  ),
-                                                );
-                                                // add by vm
-                                                vmJobApplication
-                                                    .addJobApplication(
-                                                        jobApplication);
-                                                // Confirm, Close the dialog and pop job details
-                                                Navigator.of(context).pop();
-                                                Navigator.of(context).pop();
-                                              },
-                                              child: const Text(
-                                                'Confirm',
-                                                style: TextStyle(
-                                                    color: Colors.red),
-                                              )),
-                                          CupertinoDialogAction(
+                  View<StudentViewModel>(
+                    shouldRebuild: false,
+                    builder: (_, vmJobApplication, __) {
+                      return MaterialButton(
+                        minWidth: MediaQuery.of(context).size.width,
+                        height: 60,
+                        color: vm.isJobApplicationApplied(job.id)
+                            ? Colors.grey[350]
+                            : Colors.deepOrange,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30.0)),
+                        child: Text(
+                          vm.isJobApplicationApplied(job.id)
+                              ? "JOB APPLIED"
+                              : "APPLY JOB",
+                          style: const TextStyle(color: Colors.white),
+                        ),
+                        onPressed: () {
+                          vm.isJobApplicationApplied(job.id)
+                              ? null
+                              : showCupertinoDialog(
+                                  context: context,
+                                  builder: (BuildContext ctx) {
+                                    return CupertinoAlertDialog(
+                                      title: const Text('Apply Job'),
+                                      content: const Text(
+                                          'Confirm to submit your application? Your apllication will notify the recruiter and wait for approval.'),
+                                      actions: [
+                                        CupertinoDialogAction(
                                             onPressed: () {
-                                              // Cancel, Close the dialog
+                                              final dateToday = DateTime.now();
+                                              String strDateToday =
+                                                  DateFormat('d MMM yyyy')
+                                                      .format(dateToday);
+                                              // add into job application
+                                              JobApplication jobApplication =
+                                                  JobApplication(
+                                                approvalStatus: '',
+                                                dateApply: strDateToday,
+                                                isApproval: false,
+                                                isPayment: false,
+                                                isViewResult: false,
+                                                paymentStatus: '',
+                                                selectedJob: Job(
+                                                  id: job.id,
+                                                  imagePath: job.imagePath,
+                                                  recruiter: vm
+                                                      .getJob(index)
+                                                      .recruiter,
+                                                  title: job.title,
+                                                  venue: job.venue,
+                                                ),
+                                                applicant: User(
+                                                  age: vm.currentUser.age,
+                                                  email: vm.currentUser.email,
+                                                  firstName:
+                                                      vm.currentUser.firstName,
+                                                  gender: vm.currentUser.gender,
+                                                  lastName:
+                                                      vm.currentUser.lastName,
+                                                  residueAddress: vm.currentUser
+                                                      .residueAddress,
+                                                  uid: vm.currentUser.uid,
+                                                  username:
+                                                      vm.currentUser.username,
+                                                ),
+                                              );
+                                              // add by vm
+                                              vmJobApplication
+                                                  .addJobApplication(
+                                                      jobApplication);
+                                              // Confirm, Close the dialog and pop job details
+                                              Navigator.of(context).pop();
                                               Navigator.of(context).pop();
                                             },
                                             child: const Text(
-                                              'Cancel',
+                                              'Confirm',
                                               style:
-                                                  TextStyle(color: Colors.blue),
-                                            ),
+                                                  TextStyle(color: Colors.red),
+                                            )),
+                                        CupertinoDialogAction(
+                                          onPressed: () {
+                                            // Cancel, Close the dialog
+                                            Navigator.of(context).pop();
+                                          },
+                                          child: const Text(
+                                            'Cancel',
+                                            style:
+                                                TextStyle(color: Colors.blue),
                                           ),
-                                        ],
-                                      );
-                                    },
-                                  );
-                          },
-                        );
-                      },
-                    ),
-                  const SizedBox(height: 20),
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                );
+                        },
+                      );
+                    },
+                  ),
                 ], /* end of text container */
               ),
             ),

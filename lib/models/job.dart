@@ -18,7 +18,7 @@ class Job {
 
   // constructor
   Job({
-    this.id = '',
+    this.id = 0,
     this.imagePath = '',
     this.title = '',
     required this.recruiter,
@@ -85,7 +85,6 @@ class Job {
           'uid': recruiter.uid,
           'username': recruiter.username,
         },
-        'venue': venue,
         'datePost': datePost,
         'jobHighlights': jobHighlights,
         'jobResponsibilities': jobResponsibilities,

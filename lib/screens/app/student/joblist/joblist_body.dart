@@ -12,23 +12,12 @@ class JoblistBody extends StatelessWidget {
   // ignore: use_key_in_widget_constructors
   const JoblistBody({this.state});
 
-  void _navigateJobdetailsScreen(
-      BuildContext context, int index, StudentViewModel vm) async {
-    print('my print, user: ${vm.currentUser.status}');
-    if (vm.currentUser.status == 'Staff') {
-      await Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (_) =>
-                JobdetailsScreen(index: index, operation: 'staffJoblist'),
-          ));
-    } else {
-      await Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (_) => JobdetailsScreen(index: index),
-          ));
-    }
+  void _navigateJobdetailsScreen({context, index}) async {
+    await Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (_) => JobdetailsScreen(index: index),
+        ));
   }
 
   @override
@@ -57,8 +46,8 @@ class JoblistBody extends StatelessWidget {
                       return Column(
                         children: <Widget>[
                           InkWell(
-                            onTap: () =>
-                                _navigateJobdetailsScreen(context, index, vm),
+                            onTap: () => _navigateJobdetailsScreen(
+                                context: context, index: index),
                             child: Column(
                               children: <Widget>[
                                 // title image
