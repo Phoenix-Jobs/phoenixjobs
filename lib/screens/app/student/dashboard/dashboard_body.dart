@@ -1,5 +1,10 @@
+// ignore_for_file: import_of_legacy_library_into_null_safe
+
 import 'package:flutter/material.dart';
 import 'package:phoenixjobs/screens/app/student/dashboard/dashboard_viewmodel.dart';
+import 'package:phoenixjobs/screens/app/student/dashboard/job_application_tile.dart';
+import 'package:phoenixjobs/screens/app/student/dashboard/job_tile.dart';
+import 'package:phoenixjobs/screens/app/student/dashboard/payment_tile.dart';
 import 'package:phoenixjobs/screens/app/student/jobapplication/jobapplication_screen.dart';
 import 'package:phoenixjobs/screens/app/student/joblist/joblist_screen.dart';
 import 'package:phoenixjobs/screens/app/student/payment/payment_screen.dart';
@@ -30,6 +35,11 @@ class DashboardBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return View<DashboardViewmodel>(
       builder: (_, vm, __) {
+        // ignore: avoid_print
+        print("My print, vm.jobLength: ${vm.jobLength}");
+        // ignore: avoid_print
+        print("My print, vm.paymentLength: ${vm.paymentLength}");
+
         return ListView(
           padding: const EdgeInsets.all(20),
           children: <Widget>[
@@ -67,190 +77,28 @@ class DashboardBody extends StatelessWidget {
                     bottomRight: Radius.circular(20.0),
                   ),
                   color: Colors.white),
-              padding: const EdgeInsets.all(20),
+              padding: const EdgeInsets.only(
+                  left: 20, right: 20, top: 20, bottom: 10),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
-                //first item
+                //job items
                 children: <Widget>[
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      RichText(
-                        text: TextSpan(
-                          children: <TextSpan>[
-                            TextSpan(
-                              text: 'Restaurant Mak XXX',
-                              style: TextStyle(
-                                color: Colors.grey[800],
-                                fontSize: 14,
-                              ),
-                            ),
-                          ],
-                        ),
+                  Container(
+                    // test the border
+                    // decoration: BoxDecoration(
+                    //     border: Border.all(color: Colors.blueAccent)),
+                    // padding is necessary, else items will dissappear
+                    padding: const EdgeInsets.all(0),
+                    child: Expanded(
+                      child: ListView.builder(
+                        shrinkWrap: true,
+                        physics: const ClampingScrollPhysics(),
+                        itemCount: vm.jobLength > 5 ? 5 : vm.jobLength,
+                        itemBuilder: (context, index) => JobTile(index),
                       ),
-                      RichText(
-                        text: TextSpan(
-                          children: <TextSpan>[
-                            TextSpan(
-                              text: '>',
-                              style: TextStyle(
-                                color: Colors.grey[400],
-                                fontSize: 14,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
+                    ),
                   ),
-                  const SizedBox(height: 5),
-                  const Divider(),
-                  const SizedBox(height: 5),
-                  //second item
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      RichText(
-                        text: TextSpan(
-                          children: <TextSpan>[
-                            TextSpan(
-                              text: 'X Project Assistant',
-                              style: TextStyle(
-                                color: Colors.grey[800],
-                                fontSize: 14,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      RichText(
-                        text: TextSpan(
-                          children: <TextSpan>[
-                            TextSpan(
-                              text: '>',
-                              style: TextStyle(
-                                color: Colors.grey[400],
-                                fontSize: 14,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 5),
-                  const Divider(),
-                  const SizedBox(height: 5),
-                  //third item
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      RichText(
-                        text: TextSpan(
-                          children: <TextSpan>[
-                            TextSpan(
-                              text: 'XX Research and Development',
-                              style: TextStyle(
-                                color: Colors.grey[800],
-                                fontSize: 14,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      RichText(
-                        text: TextSpan(
-                          children: <TextSpan>[
-                            TextSpan(
-                              text: '>',
-                              style: TextStyle(
-                                color: Colors.grey[400],
-                                fontSize: 14,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 5),
-                  const Divider(),
-                  const SizedBox(height: 5),
-                  //fourth item
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      RichText(
-                        text: TextSpan(
-                          children: <TextSpan>[
-                            TextSpan(
-                              text: 'XXX Store Customer Service',
-                              style: TextStyle(
-                                color: Colors.grey[800],
-                                fontSize: 14,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      RichText(
-                        text: TextSpan(
-                          children: <TextSpan>[
-                            TextSpan(
-                              text: '>',
-                              style: TextStyle(
-                                color: Colors.grey[400],
-                                fontSize: 14,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 5),
-                  const Divider(),
-                  const SizedBox(height: 5),
-                  //fifth item
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      RichText(
-                        text: TextSpan(
-                          children: <TextSpan>[
-                            TextSpan(
-                              text: 'XX Repair and Replacement Service',
-                              style: TextStyle(
-                                color: Colors.grey[800],
-                                fontSize: 14,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      RichText(
-                        text: TextSpan(
-                          children: <TextSpan>[
-                            TextSpan(
-                              text: '>',
-                              style: TextStyle(
-                                color: Colors.grey[400],
-                                fontSize: 14,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 30),
-                  // see more button
                   SizedBox(
                     width: MediaQuery.of(context).size.width,
                     child: TextButton(
@@ -299,81 +147,31 @@ class DashboardBody extends StatelessWidget {
                     bottomRight: Radius.circular(20.0),
                   ),
                   color: Colors.white),
-              padding: const EdgeInsets.all(20),
+              padding: const EdgeInsets.only(
+                  left: 20, right: 20, top: 20, bottom: 10),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
-                //first item
+                //job application items
                 children: <Widget>[
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      RichText(
-                        text: TextSpan(
-                          children: <TextSpan>[
-                            TextSpan(
-                              text: 'Restaurant Mak XXX',
-                              style: TextStyle(
-                                color: Colors.grey[800],
-                                fontSize: 14,
-                              ),
-                            ),
-                          ],
-                        ),
+                  Container(
+                    // test the border
+                    // decoration: BoxDecoration(
+                    //     border: Border.all(color: Colors.blueAccent)),
+                    // padding is necessary, else items will dissappear
+                    padding: const EdgeInsets.all(0),
+                    child: Expanded(
+                      child: ListView.builder(
+                        shrinkWrap: true,
+                        physics: const ClampingScrollPhysics(),
+                        itemCount: vm.jobApplicationLength > 5
+                            ? 5
+                            : vm.jobApplicationLength,
+                        itemBuilder: (context, index) =>
+                            JobApplicationTile(index),
                       ),
-                      RichText(
-                        text: TextSpan(
-                          children: <TextSpan>[
-                            TextSpan(
-                              text: '>',
-                              style: TextStyle(
-                                color: Colors.grey[400],
-                                fontSize: 14,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
+                    ),
                   ),
-                  const SizedBox(height: 5),
-                  const Divider(),
-                  const SizedBox(height: 5),
-                  //second item
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      RichText(
-                        text: TextSpan(
-                          children: <TextSpan>[
-                            TextSpan(
-                              text: 'X Project Assistant',
-                              style: TextStyle(
-                                color: Colors.grey[800],
-                                fontSize: 14,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      RichText(
-                        text: TextSpan(
-                          children: <TextSpan>[
-                            TextSpan(
-                              text: '>',
-                              style: TextStyle(
-                                color: Colors.grey[400],
-                                fontSize: 14,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 30),
                   // see more button
                   SizedBox(
                     width: MediaQuery.of(context).size.width,
@@ -424,71 +222,28 @@ class DashboardBody extends StatelessWidget {
                     bottomRight: Radius.circular(20.0),
                   ),
                   color: Colors.white),
-              padding: const EdgeInsets.all(20),
+              padding: const EdgeInsets.only(
+                  left: 20, right: 20, top: 20, bottom: 10),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
-                //first item
+                //payment items
                 children: <Widget>[
-                  RichText(
-                    text: TextSpan(
-                      children: <TextSpan>[
-                        TextSpan(
-                          text: 'Restaurant Mak XXX',
-                          style: TextStyle(
-                            color: Colors.grey[800],
-                            fontSize: 14,
-                          ),
-                        ),
-                      ],
+                  Container(
+                    // test the border
+                    // decoration: BoxDecoration(
+                    //     border: Border.all(color: Colors.blueAccent)),
+                    // padding is necessary, else items will dissappear
+                    padding: const EdgeInsets.all(1),
+                    child: Expanded(
+                      child: ListView.builder(
+                        shrinkWrap: true,
+                        physics: const ClampingScrollPhysics(),
+                        itemCount: vm.paymentLength > 5 ? 5 : vm.paymentLength,
+                        itemBuilder: (context, index) => PaymentTile(index),
+                      ),
                     ),
                   ),
-                  const SizedBox(height: 5),
-                  RichText(
-                    text: TextSpan(
-                      children: <TextSpan>[
-                        TextSpan(
-                          text: 'Payment successful',
-                          style: TextStyle(
-                            color: Colors.lightGreenAccent[400],
-                            fontSize: 14,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(height: 5),
-                  const Divider(),
-                  const SizedBox(height: 5),
-                  //second item
-                  RichText(
-                    text: TextSpan(
-                      children: <TextSpan>[
-                        TextSpan(
-                          text: 'X Project Assistant',
-                          style: TextStyle(
-                            color: Colors.grey[800],
-                            fontSize: 14,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(height: 5),
-                  RichText(
-                    text: TextSpan(
-                      children: <TextSpan>[
-                        TextSpan(
-                          text: 'Pending payment',
-                          style: TextStyle(
-                            color: Colors.amberAccent[400],
-                            fontSize: 14,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(height: 30),
                   // see more button
                   SizedBox(
                     width: MediaQuery.of(context).size.width,

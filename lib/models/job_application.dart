@@ -12,6 +12,8 @@ class JobApplication {
   String applicationStatus;
   String paymentStatus;
   String approvalStatus;
+  bool isPayment;
+  bool isApproval;
 
   // constructor
   JobApplication({
@@ -23,6 +25,8 @@ class JobApplication {
     this.applicationStatus = '',
     this.paymentStatus = '',
     this.approvalStatus = '',
+    this.isPayment = false,
+    this.isApproval = false,
   });
 
   // copy constructor
@@ -36,6 +40,8 @@ class JobApplication {
           applicationStatus: from.applicationStatus,
           paymentStatus: from.paymentStatus,
           approvalStatus: from.approvalStatus,
+          isPayment: from.isPayment,
+          isApproval: from.isApproval,
         );
 
   // extract from json
@@ -49,6 +55,8 @@ class JobApplication {
           applicationStatus: json['applicationStatus'],
           paymentStatus: json['paymentStatus'],
           approvalStatus: json['approvalStatus'],
+          isPayment: json['isPayment'],
+          isApproval: json['isApproval'],
         );
 
   // encode to json
@@ -65,16 +73,16 @@ class JobApplication {
           'gender': applicant.gender,
         },
         'recruiter': {
-          'uid': applicant.uid,
-          'username': applicant.username,
+          'uid': selectedJob.recruiter.uid,
+          'username': selectedJob.recruiter.username,
         },
         'selectedJob': {
           'id': selectedJob.id,
           'imagePath': selectedJob.imagePath,
           'title': selectedJob.title,
           'recruiter': {
-            'uid': applicant.uid,
-            'username': applicant.username,
+            'uid': selectedJob.recruiter.uid,
+            'username': selectedJob.recruiter.username,
           },
           'venue': selectedJob.venue,
         },
@@ -82,6 +90,8 @@ class JobApplication {
         'applicationStatus': applicationStatus,
         'paymentStatus': paymentStatus,
         'approvalStatus': approvalStatus,
+        'isPayment': isPayment,
+        'isApproval': isApproval,
       };
 
   // copywith
@@ -94,6 +104,8 @@ class JobApplication {
     applicationStatus,
     paymentStatus,
     approvalStatus,
+    isPayment,
+    isApproval,
   }) =>
       JobApplication(
         id: id ?? this.id,
@@ -104,5 +116,7 @@ class JobApplication {
         applicationStatus: applicationStatus ?? this.applicationStatus,
         paymentStatus: paymentStatus ?? this.paymentStatus,
         approvalStatus: approvalStatus ?? this.approvalStatus,
+        isPayment: isPayment ?? this.isPayment,
+        isApproval: isApproval ?? this.isApproval,
       );
 }

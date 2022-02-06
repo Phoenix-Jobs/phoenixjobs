@@ -13,6 +13,7 @@ abstract class JobApplicationService {
 
   Future<List<JobApplication>> fetchJobApplications();
   Future<List<JobApplication>> fetchStudentApplications();
+  Future<List<JobApplication>> fetchStudentPayments();
   Future<List<JobApplication>> fetchStaffApprovals();
   Future<JobApplication> getJobApplication(id);
   Future<JobApplication> updateJobApplication({id, JobApplication data});

@@ -17,9 +17,11 @@ class DashboardViewmodel extends Viewmodel {
   // stream observer initializer
   StreamSubscription _jobStreamObserver;
   StreamSubscription _jobApplicationStreamObserver;
+  StreamSubscription _jobPaymentStreamObserver;
   bool get isObservingJobStream => _jobStreamObserver != null;
   bool get isObservingJobApplicationStream =>
       _jobApplicationStreamObserver != null;
+  bool get isObservingJobPaymentStream => _jobPaymentStreamObserver != null;
   // user repository initializer
   final UserRepository _userRepository = locator<UserRepository>();
   final UserService _userService = locator<UserService>();
@@ -34,6 +36,7 @@ class DashboardViewmodel extends Viewmodel {
   final JobApplicationService _jobApplicationService =
       locator<JobApplicationService>();
   List<JobApplication> _jobApplicationList;
+  // job payment status intializer
   List<JobApplication> _paymentList;
 
   // viewmodel onload
@@ -42,8 +45,8 @@ class DashboardViewmodel extends Viewmodel {
       if (user == null) {
         // if no user, consider dashboard items is nothing
         _jobList = null;
-        _jobApplicationList = null;
         _paymentList = null;
+        _jobApplicationList = null;
       } else {
         init();
       }
@@ -53,7 +56,7 @@ class DashboardViewmodel extends Viewmodel {
 
   // update init to get data
   @override
-  init() async => await update(() async {
+  Future<void> init() async => await update(() async {
         // get current user
         _currentUser = await _userService.getUser(_userRepository.user.uid);
 
@@ -78,8 +81,43 @@ class DashboardViewmodel extends Viewmodel {
             // ignore: avoid_print
             onError: (e) => print(e));
 
+        // get payment list
+        _paymentList = await _jobApplicationService.fetchStudentPayments();
+        _jobPaymentStreamObserver = _jobApplicationService.observeStream(
+            onData: (receivedData) async => await update(() async =>
+                _paymentList = (receivedData.docs as List)
+                    .map((doc) => JobApplication.fromJson(doc.data()))
+                    .toList()),
+            // ignore: avoid_print
+            onError: (e) => print(e));
+
         // super init
         super.init();
+      });
+
+  // get job list length
+  int get jobLength => _jobList == null ? 0 : _jobList.length;
+  // get student's job application list length
+  int get jobApplicationLength =>
+      _jobApplicationList == null ? 0 : _jobApplicationList.length;
+  // get student's payment list length
+  int get paymentLength => _paymentList == null ? 0 : _paymentList.length;
+
+  // get job item by index
+  Job getJob(int i) => _jobList == null ? null : _jobList[i];
+  // get job application item by index
+  JobApplication getJobApplication(int i) =>
+      _jobApplicationList == null ? null : _jobApplicationList[i];
+  // get job payment item by index
+  JobApplication getPaymentStatus(int i) =>
+      _paymentList == null ? null : _paymentList[i];
+
+  // add job application
+  Future<void> addJobApplication(JobApplication jobApplication) async =>
+      await update(() async {
+        final newJobApplication =
+            await _jobApplicationService.addJobApplication(jobApplication);
+        _jobApplicationList.add(newJobApplication);
       });
 
   // signout
@@ -90,19 +128,27 @@ class DashboardViewmodel extends Viewmodel {
     // terminate job application stream observer
     _jobApplicationStreamObserver?.cancel();
     _jobApplicationStreamObserver = null;
+    // terminate job payment stream observer
+    _jobPaymentStreamObserver?.cancel();
+    _jobPaymentStreamObserver = null;
     // signout user
     await _userRepository.signOut();
   }
 
   // dispose
   @override
-  void dispose() {
+  Future<void> dispose() async {
     // terminate job stream observer
     _jobStreamObserver?.cancel();
     _jobStreamObserver = null;
     // terminate job application stream observer
     _jobApplicationStreamObserver?.cancel();
     _jobApplicationStreamObserver = null;
+    // terminate job payment stream observer
+    _jobPaymentStreamObserver?.cancel();
+    _jobPaymentStreamObserver = null;
+    // signout user
+    await _userRepository.signOut();
     // super dispose
     super.dispose();
   }

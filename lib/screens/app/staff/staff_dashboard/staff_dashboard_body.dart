@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:phoenixjobs/screens/app/student/jobapplication/jobapplication_screen.dart';
+import 'package:phoenixjobs/screens/app/staff/recruitment/recruitment_screen.dart';
 import 'package:phoenixjobs/screens/app/student/joblist/joblist_screen.dart';
 
 class StaffDashboardBody extends StatelessWidget {
@@ -12,7 +12,7 @@ class StaffDashboardBody extends StatelessWidget {
     await Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (_) => JobapplicationScreen(),
+          builder: (_) => RecruitmentScreen(),
         ));
   }
 

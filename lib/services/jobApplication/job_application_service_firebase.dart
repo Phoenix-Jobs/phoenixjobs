@@ -17,6 +17,11 @@ class JobApplicationServiceFirebase extends JobApplicationService {
       .collection('jobApplications')
       .where('applicant.uid', isEqualTo: user.uid);
 
+  Query get _collectionByPaymentStatus => _firestore
+      .collection('jobApplications')
+      .where('applicant.uid', isEqualTo: user.uid)
+      .where('isPayment', isEqualTo: true);
+
   Query get _collectionByRecruiterUid => _firestore
       .collection('jobApplications')
       .where('recruiter.uid', isEqualTo: user.uid);
@@ -41,6 +46,16 @@ class JobApplicationServiceFirebase extends JobApplicationService {
       final studentApplications =
           JobApplication.fromJson(doc.data()).copyWith(id: doc.id);
       return studentApplications;
+    }).toList();
+  }
+
+  @override
+  Future<List<JobApplication>> fetchStudentPayments() async {
+    final snapshot = await _collectionByPaymentStatus.get();
+    return snapshot.docs.map((doc) {
+      final paymentStatus =
+          JobApplication.fromJson(doc.data()).copyWith(id: doc.id);
+      return paymentStatus;
     }).toList();
   }
 
