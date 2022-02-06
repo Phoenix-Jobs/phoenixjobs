@@ -18,10 +18,13 @@ class StudentViewModel extends Viewmodel {
   StreamSubscription _jobStreamObserver;
   StreamSubscription _jobApplicationStreamObserver;
   StreamSubscription _jobPaymentStreamObserver;
+  StreamSubscription _jobRecruitmentStreamObserver;
   bool get isObservingJobStream => _jobStreamObserver != null;
   bool get isObservingJobApplicationStream =>
       _jobApplicationStreamObserver != null;
   bool get isObservingJobPaymentStream => _jobPaymentStreamObserver != null;
+  bool get isObservingJobRecruitmentStream =>
+      _jobRecruitmentStreamObserver != null;
   // user repository initializer
   final UserRepository _userRepository = locator<UserRepository>();
   final UserService _userService = locator<UserService>();
@@ -36,8 +39,11 @@ class StudentViewModel extends Viewmodel {
   final JobApplicationService _jobApplicationService =
       locator<JobApplicationService>();
   List<JobApplication> _jobApplicationList;
+  List<JobApplication> get jobApplicationList => _jobApplicationList;
   // job payment status intializer
   List<JobApplication> _paymentList;
+  // job recruitment initializer
+  List<Job> _jobRecruitmentList;
 
   // viewmodel onload
   StudentViewModel() {
@@ -47,6 +53,7 @@ class StudentViewModel extends Viewmodel {
         _jobList = null;
         _paymentList = null;
         _jobApplicationList = null;
+        _jobRecruitmentList = null;
       } else {
         init();
       }
@@ -91,6 +98,16 @@ class StudentViewModel extends Viewmodel {
             // ignore: avoid_print
             onError: (e) => print(e));
 
+        // get job recruitment list
+        _jobRecruitmentList = await _jobService.fetchRecruiterJobs();
+        _jobRecruitmentStreamObserver = _jobService.observeStream(
+            onData: (receivedData) async => await update(() async =>
+                _jobRecruitmentList = (receivedData.docs as List)
+                    .map((doc) => Job.fromJson(doc.data()))
+                    .toList()),
+            // ignore: avoid_print
+            onError: (e) => print(e));
+
         // super init
         super.init();
       });
@@ -102,7 +119,13 @@ class StudentViewModel extends Viewmodel {
       _jobApplicationList == null ? 0 : _jobApplicationList.length;
   // get student's payment list length
   int get paymentLength => _paymentList == null ? 0 : _paymentList.length;
+  // get recruitment list length
+  int get jobRecruitmentLength =>
+      _jobRecruitmentList == null ? 0 : _jobRecruitmentList.length;
 
+  // get recruit job by index
+  Job getRecruitJob(int i) =>
+      _jobRecruitmentList == null ? null : _jobRecruitmentList[i];
   // get job item by index
   Job getJob(int i) => _jobList == null ? null : _jobList[i];
   // get job application item by index
@@ -131,6 +154,7 @@ class StudentViewModel extends Viewmodel {
         _jobApplicationList.add(newJobApplication);
       });
 
+  // update job application
   Future<void> updateJobApplication({dynamic id, JobApplication data}) async =>
       await update(() async {
         // update new data to firebase and assign to variable
@@ -141,6 +165,32 @@ class StudentViewModel extends Viewmodel {
             .indexWhere((jobApplication) => jobApplication.id == id);
         // assign updated item into vm list
         _jobApplicationList[index] = updatedJobApplication;
+      });
+
+  // add job
+  Future<void> addJob(Job job) async => await update(() async {
+        final newJob = await _jobService.addJob(job);
+        _jobList.add(newJob);
+
+        // refresh job recruitment list
+        _jobRecruitmentList = await _jobService.fetchRecruiterJobs();
+      });
+
+  // update recruit job
+  Future<void> updateRecruitJob({dynamic id, Job data}) async =>
+      await update(() async {
+        // update new data to firebase and assign to variable
+        final updatedJob = await _jobService.updateJob(id: id, data: data);
+        // get item index from vm list
+        final index = _jobRecruitmentList.indexWhere((job) => job.id == id);
+        // assign updated item into vm list
+        _jobRecruitmentList[index] = updatedJob;
+      });
+
+  // delete recruit job
+  Future<void> deleteRecruitJob(dynamic id) async => await update(() async {
+        await _jobService.removeJob(id);
+        _jobRecruitmentList.removeWhere((job) => job.id == id);
       });
 
   // signout
@@ -154,6 +204,9 @@ class StudentViewModel extends Viewmodel {
     // terminate job payment stream observer
     _jobPaymentStreamObserver?.cancel();
     _jobPaymentStreamObserver = null;
+    // terminate job recruitment stream observer
+    _jobRecruitmentStreamObserver?.cancel();
+    _jobRecruitmentStreamObserver = null;
     // signout user
     await _userRepository.signOut();
   }
@@ -170,6 +223,9 @@ class StudentViewModel extends Viewmodel {
     // terminate job payment stream observer
     _jobPaymentStreamObserver?.cancel();
     _jobPaymentStreamObserver = null;
+    // terminate job recruitment stream observer
+    _jobRecruitmentStreamObserver?.cancel();
+    _jobRecruitmentStreamObserver = null;
     // signout user
     await _userRepository.signOut();
     // super dispose

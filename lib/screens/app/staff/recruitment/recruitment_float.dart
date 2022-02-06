@@ -11,7 +11,8 @@ class RecruitmentFloat extends StatelessWidget {
     await Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (_) => AddrecruitmentScreen(),
+          builder: (_) =>
+              const AddrecruitmentScreen(index: 0, operation: 'add'),
         ));
   }
 
@@ -19,7 +20,9 @@ class RecruitmentFloat extends StatelessWidget {
   Widget build(BuildContext context) {
     return FloatingActionButton(
       heroTag: null,
-      onPressed: () => _navigateAddrecruitmentScreen(context: context),
+      onPressed: () {
+        _navigateAddrecruitmentScreen(context: context);
+      },
       // label: const Text('Add'),
       child: const Icon(Icons.add),
     );
