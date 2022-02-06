@@ -4,9 +4,14 @@
 import 'package:get_it/get_it.dart';
 import 'package:phoenixjobs/screens/app/auth/auth_viewmodel.dart';
 import 'package:phoenixjobs/screens/app/auth/judge_user_type_viewmodel.dart';
+import 'package:phoenixjobs/screens/app/staff/staff_dashboard/staff_dashboard_viewmodel.dart';
 import 'package:phoenixjobs/screens/app/student/dashboard/dashboard_viewmodel.dart';
 import 'package:phoenixjobs/services/auth/auth_service_firebase.dart';
 import 'package:phoenixjobs/services/auth/auth_service.dart';
+import 'package:phoenixjobs/services/job/job_service.dart';
+import 'package:phoenixjobs/services/job/job_service_firebase.dart';
+import 'package:phoenixjobs/services/jobApplication/job_application_service.dart';
+import 'package:phoenixjobs/services/jobApplication/job_application_service_firebase.dart';
 import 'package:phoenixjobs/services/user/user_repository.dart';
 import 'package:phoenixjobs/services/user/user_service.dart';
 import 'package:phoenixjobs/services/user/user_service_firebase.dart';
@@ -27,6 +32,12 @@ void initializeServiceLocator() {
   locator.registerLazySingleton<UserService>(
     () => UserServiceFirebase(),
   );
+  locator.registerLazySingleton<JobService>(
+    () => JobServiceFirebase(),
+  );
+  locator.registerLazySingleton<JobApplicationService>(
+    () => JobApplicationServiceFirebase(),
+  );
 
   /***** Repositories *****/
   locator.registerLazySingleton<UserRepository>(
@@ -39,6 +50,9 @@ void initializeServiceLocator() {
   );
   locator.registerLazySingleton<DashboardViewmodel>(
     () => DashboardViewmodel(),
+  );
+  locator.registerLazySingleton<StaffDashboardViewmodel>(
+    () => StaffDashboardViewmodel(),
   );
   locator.registerLazySingleton<JudgeUserTypeViewmodel>(
     () => JudgeUserTypeViewmodel(),

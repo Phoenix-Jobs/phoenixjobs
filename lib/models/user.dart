@@ -60,6 +60,26 @@ class User {
           status: json['status'],
         );
 
+  // extract necessary details for applicant
+  User.getApplicantInfo(Map<String, dynamic> json)
+      : this(
+          uid: json['uid'],
+          username: json['username'],
+          firstName: json['firstName'],
+          lastName: json['lastName'],
+          email: json['email'],
+          residueAddress: json['residueAddress'],
+          age: json['age'],
+          gender: json['gender'],
+        );
+
+  // extract json uid and username only
+  User.getJsonUidAndUsername(Map<String, dynamic> json)
+      : this(
+          uid: json['uid'],
+          username: json['username'],
+        );
+
   // encode to json
   Map<String, dynamic> toJson() => {
         'uid': uid,

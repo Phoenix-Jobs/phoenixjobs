@@ -15,29 +15,17 @@ class DashboardDrawer extends StatelessWidget {
 
   void _navigateJobapplicationScreen({context}) async {
     await Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (_) => JobapplicationScreen(),
-      ),
-    );
+        context, MaterialPageRoute(builder: (_) => JobapplicationScreen()));
   }
 
   void _navigateJoblistScreen({context}) async {
     await Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (_) => JoblistScreen(),
-      ),
-    );
+        context, MaterialPageRoute(builder: (_) => JoblistScreen()));
   }
 
   void _navigatePaymentScreen({context}) async {
     await Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (_) => PaymentScreen(),
-      ),
-    );
+        context, MaterialPageRoute(builder: (_) => PaymentScreen()));
   }
 
   @override

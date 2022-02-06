@@ -8,7 +8,7 @@ import 'package:phoenixjobs/services/user/user_service.dart';
 import 'package:uuid/uuid.dart';
 
 class UserServiceFirebase extends UserService {
-  final _idGenerator = Uuid();
+  final _uuid = Uuid();
   final _firestore = Firestore();
   String get _userUid => user.uid;
 
@@ -16,8 +16,8 @@ class UserServiceFirebase extends UserService {
   CollectionReference get _collection =>
       _firestore.collection('users'); // use path style to reference
 
-  // get user collection by uid
-  Query get _userCollection =>
+  // get user collection by user uid
+  Query get _collectionByUserUid =>
       _firestore.collection('users').where('uid', isEqualTo: _userUid);
 
   // get user document by uid
@@ -26,13 +26,14 @@ class UserServiceFirebase extends UserService {
 
   @override
   Future<List<User>> fetchUsers() async {
-    final snapshot = await _userCollection.get();
+    final snapshot = await _collectionByUserUid.get();
     // transform data. Field id might be null, so take the doc id instead
-    return snapshot.docs.map(
-      (doc) {
-        // do something, should recieve job application list
-      },
-    ).toList();
+    return snapshot.docs.map((doc) {
+      // return a list of user, not necessary in this development
+      // transform data. Field id might be null, so take the doc id instead
+      final users = User.fromJson(doc.data()).copyWith(uid: doc.id);
+      return users;
+    }).toList();
   }
 
   @override
@@ -55,7 +56,7 @@ class UserServiceFirebase extends UserService {
 
   @override
   Future<User> addUser(User data) async {
-    final _uid = _idGenerator.v1(); // Generate time-based id
+    final _uid = _uuid.v1(); // Generate time-based id
     final _data = data.copyWith(uid: _uid); // add generated id the data
     await _collection.doc(_uid).set(_data.toJson());
     return _data;
