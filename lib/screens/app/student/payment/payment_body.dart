@@ -29,11 +29,11 @@ class PaymentBody extends StatelessWidget {
                 child: ListView.builder(
                   shrinkWrap: true,
                   physics: const ClampingScrollPhysics(),
-                  itemCount: vm.jobApplicationLength,
+                  itemCount: vm.paymentLength,
                   itemBuilder: (context, index) =>
                       SelectorView<StudentViewModel, JobApplication>(
-                    selector: (_, vm) => vm.getJobApplication(index),
-                    builder: (_, vm, jobApplication, ___) {
+                    selector: (_, vm) => vm.getPaymentStatus(index),
+                    builder: (_, vm, paymentStatus, ___) {
                       return Container(
                         decoration: BoxDecoration(
                             boxShadow: [
@@ -70,7 +70,7 @@ class PaymentBody extends StatelessWidget {
                                     ),
                                   ),
                                   TextSpan(
-                                    text: jobApplication.selectedJob.title,
+                                    text: paymentStatus.selectedJob.title,
                                     style: TextStyle(
                                       color: Colors.grey[800],
                                       fontSize: 14,
@@ -85,7 +85,7 @@ class PaymentBody extends StatelessWidget {
                               text: TextSpan(
                                 children: <TextSpan>[
                                   TextSpan(
-                                    text: jobApplication.paymentStatus,
+                                    text: paymentStatus.paymentStatus,
                                     style: TextStyle(
                                       color: Colors.lightGreenAccent[400],
                                       fontSize: 12,

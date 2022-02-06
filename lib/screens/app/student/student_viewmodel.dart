@@ -112,6 +112,17 @@ class StudentViewModel extends Viewmodel {
   JobApplication getPaymentStatus(int i) =>
       _paymentList == null ? null : _paymentList[i];
 
+  // is job application is applied
+  bool isJobApplicationApplied(dynamic id) {
+    final index = _jobApplicationList
+        .indexWhere((jobApplication) => jobApplication.selectedJob.id == id);
+    if (index == -1) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
   // add job application
   Future<void> addJobApplication(JobApplication jobApplication) async =>
       await update(() async {
