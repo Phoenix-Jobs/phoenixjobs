@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 class AddrecruitmentAppBar extends StatelessWidget
     implements PreferredSizeWidget {
   // ignore: prefer_typing_uninitialized_variables
-  final state;
+  final state, operation;
   // ignore: use_key_in_widget_constructors
-  const AddrecruitmentAppBar({this.state});
+  const AddrecruitmentAppBar({this.state, this.operation});
 
   @override
   Size get preferredSize => const Size.fromHeight(50.0);
@@ -17,7 +17,8 @@ class AddrecruitmentAppBar extends StatelessWidget
         icon: const Icon(Icons.arrow_back, color: Colors.white),
         onPressed: () => Navigator.of(context).pop(),
       ),
-      title: const Text('Add recruitment'),
+      title:
+          Text(operation == 'add' ? 'Add recruitment' : 'Update recruitment'),
       centerTitle: false,
     );
   }

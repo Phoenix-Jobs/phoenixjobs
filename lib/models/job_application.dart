@@ -16,7 +16,7 @@ class JobApplication {
 
   // constructor
   JobApplication({
-    this.id = 0,
+    this.id = '',
     required this.applicant,
     required this.selectedJob,
     this.dateApply = '',

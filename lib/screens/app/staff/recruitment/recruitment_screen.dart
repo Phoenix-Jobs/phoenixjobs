@@ -10,10 +10,6 @@ class RecruitmentScreen extends StatefulWidget {
 }
 
 class _RecruitmentScreenState extends State<RecruitmentScreen> {
-  bool _isApplyJobDialog = false;
-  bool get isApplyJobDialog => _isApplyJobDialog;
-  set isApplyJobDialog(v) => _isApplyJobDialog = v;
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(
