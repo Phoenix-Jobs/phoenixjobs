@@ -29,12 +29,13 @@ class JobdetailsBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SelectorView<StudentViewModel, Job>(
-      selector: (_, vm) => vm.currentUser.status == 'student'
+      selector: (_, vm) => vm.currentUser.status == 'Student'
           ? vm.getJob(index)
           : operation == 'staffJoblist'
               ? vm.getJob(index)
               : vm.getRecruitJob(index),
       builder: (_, vm, job, ___) {
+        print('my print, here');
         return ListView(
           children: <Widget>[
             // title image container
@@ -451,7 +452,8 @@ class JobdetailsBody extends StatelessWidget {
                                                 // add into job application
                                                 JobApplication jobApplication =
                                                     JobApplication(
-                                                  approvalStatus: '',
+                                                  approvalStatus:
+                                                      'Waiting for approval status',
                                                   dateApply: strDateToday,
                                                   isApproval: false,
                                                   isPayment: false,

@@ -24,7 +24,7 @@ class JobApplicationServiceFirebase extends JobApplicationService {
 
   Query get _collectionByRecruiterUid => _firestore
       .collection('jobApplications')
-      .where('recruiter.uid', isEqualTo: user.uid);
+      .where('selectedJob.recruiter.uid', isEqualTo: user.uid);
 
   DocumentReference _getNumberDocument(jobApplicationId) =>
       _firestore.document('jobApplications/$jobApplicationId');

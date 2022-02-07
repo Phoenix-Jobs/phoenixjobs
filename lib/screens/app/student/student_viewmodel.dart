@@ -19,12 +19,14 @@ class StudentViewModel extends Viewmodel {
   StreamSubscription _jobApplicationStreamObserver;
   StreamSubscription _jobPaymentStreamObserver;
   StreamSubscription _jobRecruitmentStreamObserver;
+  StreamSubscription _approvalStreamObserver;
   bool get isObservingJobStream => _jobStreamObserver != null;
   bool get isObservingJobApplicationStream =>
       _jobApplicationStreamObserver != null;
   bool get isObservingJobPaymentStream => _jobPaymentStreamObserver != null;
   bool get isObservingJobRecruitmentStream =>
       _jobRecruitmentStreamObserver != null;
+  bool get isObservingApprovalStream => _approvalStreamObserver != null;
   // user repository initializer
   final UserRepository _userRepository = locator<UserRepository>();
   final UserService _userService = locator<UserService>();
@@ -44,6 +46,8 @@ class StudentViewModel extends Viewmodel {
   List<JobApplication> _paymentList;
   // job recruitment initializer
   List<Job> _jobRecruitmentList;
+  // job approval initializer
+  List<JobApplication> _approvalList;
 
   // viewmodel onload
   StudentViewModel() {
@@ -54,6 +58,7 @@ class StudentViewModel extends Viewmodel {
         _paymentList = null;
         _jobApplicationList = null;
         _jobRecruitmentList = null;
+        _approvalList = null;
       } else {
         init();
       }
@@ -108,6 +113,16 @@ class StudentViewModel extends Viewmodel {
             // ignore: avoid_print
             onError: (e) => print(e));
 
+        // get approval list
+        _approvalList = await _jobApplicationService.fetchStaffApprovals();
+        _approvalStreamObserver = _jobApplicationService.observeStream(
+            onData: (receivedData) async => await update(() async =>
+                _approvalList = (receivedData.docs as List)
+                    .map((doc) => JobApplication.fromJson(doc.data()))
+                    .toList()),
+            // ignore: avoid_print
+            onError: (e) => print(e));
+
         // super init
         super.init();
       });
@@ -122,6 +137,8 @@ class StudentViewModel extends Viewmodel {
   // get recruitment list length
   int get jobRecruitmentLength =>
       _jobRecruitmentList == null ? 0 : _jobRecruitmentList.length;
+  // get approval list length
+  int get approvalLength => _approvalList == null ? 0 : _approvalList.length;
 
   // get recruit job by index
   Job getRecruitJob(int i) =>
@@ -134,6 +151,9 @@ class StudentViewModel extends Viewmodel {
   // get job payment item by index
   JobApplication getPaymentStatus(int i) =>
       _paymentList == null ? null : _paymentList[i];
+  // get approval item by index
+  JobApplication getApproval(int i) =>
+      _approvalList == null ? null : _approvalList[i];
 
   // is job application is applied
   bool isJobApplicationApplied(dynamic id) {
